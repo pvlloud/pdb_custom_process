@@ -1,17 +1,12 @@
 import pprint
 
-
-def read_atom_rows_from_file(file_path):
-    with open(file_path, "r") as pdb_file:
-        for row in pdb_file:
-            if row.startswith("ATOM"):
-                yield row.split()
+from pdb_file_processor import PDBFileProcessor
 
 
 def main():
-    atom_lines = read_atom_rows_from_file("1bey.pdb")
-    for line in atom_lines:
-        pprint.pprint(line)
+    file_name = "1bey.pdb"
+    procesor = PDBFileProcessor(file_name)
+    pprint.pprint(procesor.find_atom_chains_from_list(["H", "L"]))
 
 
 if __name__ == "__main__":

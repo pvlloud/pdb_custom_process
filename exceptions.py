@@ -1,0 +1,2 @@
+class MissingAtomsException(Exception):
+    pass
