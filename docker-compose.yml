@@ -1,0 +1,42 @@
+x-backend: &backend
+  build:
+    context: .
+    dockerfile: ./Dockerfile
+  image: pipeline-app:latest
+  volumes:
+    - ./input_files:/src/input_files
+    - ./output_files:/src/output_files
+    - ./models_cache:/root/.cache/huggingface/hub
+  environment:
+    - INPUT_FOLDER_NAME=/src/input_files
+    - OUTPUT_DIRECTORY_NAME=/src/output_files
+    - CELERY_BROKER_URL=redis://redis:6379/0
+    - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    - CELERY_APP_NAME=pipeline_app
+    - HF_HOME=/root/.cache/huggingface/hub
+  depends_on:
+    - redis
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  celery_worker_1:
+    <<: *backend
+    command: uv run celery -A celery_app worker --loglevel=info
+
+
+  celery_worker_2:
+    <<: *backend
+    command: uv run celery -A celery_app worker --loglevel=info
+
+  cli:
+    <<: *backend
+    command: uv run python cli.py
+
+volumes:
+  input_files:
+  output_files:
+  models_cache:

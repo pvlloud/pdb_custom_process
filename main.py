@@ -1,7 +1,7 @@
-from pdb_processors.pdb_custom_processor import PDBFileProcessor
+from exporters.chain_file_exporter import FileExporter
 from file_providers.local_file_provider import LocalFileProvider
 from pdb_processors.pdb_biopython_processor import parse_pdb_file
-from exporters.file_exporter import FileExporter
+from pdb_processors.pdb_custom_processor import PDBFileProcessor
 
 
 def main():

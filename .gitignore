@@ -12,3 +12,7 @@ wheels/
 # Testing files
 *.pdb
 
+# Mapping and output files
+*.json
+!mapping.json
+

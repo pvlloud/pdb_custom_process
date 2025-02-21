@@ -1,9 +1,8 @@
 from typing import Iterable, List, Set
 
-from file_providers.base_file_provider import BaseFileProvider
 from exceptions import MissingAtomsException
+from file_providers.base_file_provider import BaseFileProvider
 from utils import get_mapping_dict_from_file
-
 
 AMINO_MAPPING_FILE_PATH = "mapping.json"
 
