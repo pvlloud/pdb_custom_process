@@ -23,14 +23,16 @@ def extract_chains_from_pdb(input_file_name: str, chains_lookup_list: list[str])
     chains_data = PDBFileProcessor(file_provider).find_atom_chains_from_list(
         chains_lookup_list
     )
-    return FileExporter(input_file_name, OUTPUT_DIRECTORY_NAME).write_output_file(
+    output_filename = FileExporter(input_file_name, OUTPUT_DIRECTORY_NAME).write_output_file(
         chains_data
     )
+    return output_filename
 
 
 @app.task
 def run_model_on_chains(chain_output_file_name: str):
-    chains_iterator = GetChainsFromFile(chain_output_file_name).get_chains_iterator()
+    output_file_path = Path(OUTPUT_DIRECTORY_NAME) / chain_output_file_name
+    chains_iterator = GetChainsFromFile(output_file_path).get_chains_iterator()
     for chain in chains_iterator:
         prediction_results = T5ModelExecutor().process_sequence(chain)
         PredictionFileExporter(chain, OUTPUT_DIRECTORY_NAME).export_prediction_results(
