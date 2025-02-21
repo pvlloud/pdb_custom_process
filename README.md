@@ -9,6 +9,7 @@ There is docker used to set up project environment. To set up project perform ne
 ```bash
 $ docker compose up --build
 ```
+**! Warning**: The first time you run this command, it will take a while to pre-download the model so be cautious about host machine storage.
 ## Invocation
 
 The `cli` service in the compose file is used to run the pipeline. The command to run the pipeline is as follows:

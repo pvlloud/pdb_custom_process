@@ -35,6 +35,7 @@ def run_model_on_chains(chain_output_file_name: str):
     chains_iterator = GetChainsFromFile(output_file_path).get_chains_iterator()
     for chain in chains_iterator:
         prediction_results = T5ModelExecutor().process_sequence(chain)
-        PredictionFileExporter(chain, OUTPUT_DIRECTORY_NAME).export_prediction_results(
+        new_filename = f"{chain_output_file_name.replace('_chains.json', '')}"
+        PredictionFileExporter(new_filename, OUTPUT_DIRECTORY_NAME).export_prediction_results(
             prediction_results
         )
